@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "repl_python3_Darkz-v3"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+py-cord = {git = "https://github.com/Pycord-Development/pycord"}
+jishaku = {git = "https://github.com/Gorialis/jishaku"}
+discord = {git = "https://github.com/Rapptz/discord.py"}
+aiohttp = {git = "https://github.com/aio-libs/aiohttp"}
+psutil = {git = "https://github.com/giampaolo/psutil"}
+httpx = {git = "https://github.com/encode/httpx"}
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
