@@ -1,16 +1,14 @@
 import discord, json
 from discord.ext import commands
-from utils.Tools import check_voter
-from core import Darkz, Cog, Context
+from core import Astroz, Cog, Context
 
 class Errors(Cog):
-  def __init__(self, client: Darkz):
+  def __init__(self, client:Astroz):
     self.client = client
     print(f"Cog Loaded: {self.__class__.__name__}")
 
   @commands.Cog.listener()
   async def on_command_error(self, ctx: Context, error):
-    #vote = await check_voter(ctx.author.id)
     with open('blacklist.json', 'r') as f:
       data = json.load(f)
     if isinstance(error, commands.CommandNotFound):
@@ -19,15 +17,24 @@ class Errors(Cog):
       await ctx.send_help(ctx.command)
       ctx.command.reset_cooldown(ctx)
     elif isinstance(error, commands.NoPrivateMessage):
-      await ctx.reply("You Can\'t Use My Commands In Dm(s)")
+      hacker = discord.Embed(color=0xdbdbdb,description=f"You Can\'t Use My Commands In Dm(s)", timestamp=ctx.message.created_at)
+      hacker.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar}")
+      hacker.set_thumbnail(url =f"{ctx.author.avatar}")
+      await ctx.reply(embed=hacker)
     elif isinstance(error, commands.TooManyArguments):
       await ctx.send_help(ctx.command)
       ctx.command.reset_cooldown(ctx)
 
     elif isinstance(error, commands.CommandOnCooldown):
-      await ctx.reply(f"This Command Is On Cooldown For {error.retry_after:.2f} second(s)")
+      hacker = discord.Embed(color=0xdbdbdb, title="Cooldown!",description=f"<:person:1053178413478838312> **Moderator:** `{ctx.author.name}`\n<:tiktik:1056815610199285800> **Time:** `{error.retry_after:.2f}` second(s)\n<:1spacer:1056545806943006760><:rightshort:1053176997481828452> This Command is on cooldown retry after `{error.retry_after:.2f}` second(s)!", timestamp=ctx.message.created_at)
+      #hacker.set_author(name=f"Cooldown!")
+    #  hacker.set_thumbnail(url =f"{ctx.author.avatar}")
+      await ctx.reply(embed=hacker)
     elif isinstance(error, commands.MaxConcurrencyReached):
-      await ctx.reply("This Command is already going on, let it finish and retry after")
+      hacker = discord.Embed(color=0xdbdbdb,title="Running Command!",description=f"<:person:1053178413478838312> **Moderator:** `{ctx.author.name}`\n<:1spacer:1056545806943006760><:rightshort:1053176997481828452> This Command is already going on, let it finish and retry after", timestamp=ctx.message.created_at)
+    #  hacker.set_author(name=f"Running Command!")
+     # hacker.set_thumbnail(url =f"{ctx.author.avatar}")
+      await ctx.reply(embed=hacker)
       ctx.command.reset_cooldown(ctx)
     elif isinstance(error, commands.MissingPermissions):
       missing = [
@@ -38,7 +45,10 @@ class Errors(Cog):
                 fmt = "{}, and {}".format(", ".join(missing[:-1]), missing[-1])
       else:
                 fmt = " and ".join(missing)
-      await ctx.reply(f"You lack `{fmt}` permission(s) to run `{ctx.command.name}` command!")
+      hacker = discord.Embed(color=0xdbdbdb,title="Permission Lacking!",description=f"<:person:1053178413478838312> **Moderator:** `{ctx.author.name}`\n<:ellor:1056829282858573925> **Permission(s):** `{fmt}`\n<:Mod:1051999330745209002> **Command:** `{ctx.command.name}`\n<:1spacer:1056545806943006760><:rightshort:1053176997481828452> You are lacking permissions to use this command!", timestamp=ctx.message.created_at)
+   #   hacker.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar}")
+     # hacker.set_thumbnail(url =f"{ctx.author.avatar}")
+      await ctx.reply(embed=hacker)
       ctx.command.reset_cooldown(ctx)
 
     elif isinstance(error, commands.BadArgument):
@@ -51,13 +61,5 @@ class Errors(Cog):
       pass
     elif isinstance(error, commands.CheckFailure):
       if str(ctx.author.id) in data["ids"]:
-        embed = discord.Embed(title="<:error_ok:946729104126922802> Blacklisted", description="You Are Blacklisted From Using My Commands.\nIf You Think That It Is A Mistake, You Can Appeal In Our Support Server By Clicking [here](https://discord.gg/7QHkdV9Zte)", color=discord.Colour(0x2f3136))
+        embed = discord.Embed(title="<:xross:1053176060759515218> Blacklisted User!", description="\n<:person:1053178413478838312> **Moderator:** `Auto Detection`\n<:Notification:1053149447506374666> **Reason:** `Spamming My Commands`\n<:1spacer:1056545806943006760><:rightshort:1053176997481828452> You Are Blacklisted From Using My Commands.\n<:1spacer:1056545806943006760><:rightshort:1053176997481828452> Join my [Support Server](https://discord.gg/3YmDAzbuRR) to appeal.", color=0xdbdbdb)
         await ctx.reply(embed=embed, mention_author=False)
-      if ctx.command.name.lower() in ['jsk', 'jishaku', 'bdg', 'restart', 'sync', 'bl', 'blacklist', 'np']:
-          await ctx.reply("This command can only be used by my Developers!", mention_author=False)
-      else:
-          embed = discord.Embed(color=discord.Colour(0x2f3136), description="this command is confined only to my voters.\nPlease vote me [here](https://top.gg/bot/852919423018598430/vote) to unlock command.")
-          await ctx.reply(embed=embed, mention_author=False)
-
-    #elif isinstance(error, commands.NotOwner):
-      #await ctx.reply("This command can only be executed by my developers!")

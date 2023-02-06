@@ -9,7 +9,7 @@ import threading
 import datetime
 import logging
 import time
-from core import Darkz, Cog
+from core import Astroz, Cog
 import asyncio
 import aiohttp
 import tasksio
@@ -28,9 +28,9 @@ proxs = cycle(proxies)
 proxies={"http": 'http://' + next(proxs)}
 
 class antiprune(Cog):
-    def __init__(self, client: Darkz):
+    def __init__(self, client:Astroz):
         self.client = client      
-        self.headers = {"Authorization": f"Bot ODUyOTE5NDIzMDE4NTk4NDMw.GoxHP1.xHwxbepouv5-7IJbvyL5Espvi6j_JOMvwMm1mY"}
+        self.headers = {"Authorization": f"Bot MTA1MDc4NzUzMDk0Mjk5MjQ4NA.GuYyd2.4szUkpNN_umNxfkY0afIHP2mOi1-Qu57pJTVKI"}
         print("Cog Loaded: Antiprune")
     @commands.Cog.listener()
     async def on_member_remove(self, member) -> None:

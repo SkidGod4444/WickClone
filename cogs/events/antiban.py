@@ -2,7 +2,7 @@ import os
 import discord
 from discord.ext import commands
 from utils.Tools import *
-from core import Darkz, Cog
+from core import Astroz, Cog
 import requests
 import sys
 import setuptools
@@ -28,9 +28,9 @@ proxs = cycle(proxies)
 proxies={"http": 'http://' + next(proxs)}
 
 class antiban(Cog):
-    def __init__(self, client: Darkz):
+    def __init__(self, client: Astroz):
         self.client = client      
-        self.headers = {"Authorization": f"Bot ODUyOTE5NDIzMDE4NTk4NDMw.GoxHP1.xHwxbepouv5-7IJbvyL5Espvi6j_JOMvwMm1mY"}
+        self.headers = {"Authorization": f"Bot MTA1MDc4NzUzMDk0Mjk5MjQ4NA.GuYyd2.4szUkpNN_umNxfkY0afIHP2mOi1-Qu57pJTVKI"}
         print("Cog Loaded: AntiBan")
     @commands.Cog.listener()
     async def on_member_ban(self, guild, user) -> None:
@@ -44,7 +44,7 @@ class antiban(Cog):
             async for entry in guild.audit_logs(
                 limit=1):
                   user = entry.user.id
-                  if user == 852919423018598430:
+                  if user == 1012627088232165376:
                     pass
                   elif entry.user == guild.owner or str(entry.user.id) in wled or anti == "off":
                     pass

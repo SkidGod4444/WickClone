@@ -5,7 +5,7 @@ import requests
 import sys
 import setuptools
 from itertools import cycle
-from core import Cog, Darkz
+from core import Cog, Astroz
 import threading
 import datetime
 import logging
@@ -30,7 +30,7 @@ proxies={"http": 'http://' + next(proxs)}
 class antiemojiu(Cog):
     def __init__(self, client):
         self.client = client      
-        self.headers = {"Authorization": f"Bot ODUyOTE5NDIzMDE4NTk4NDMw.GoxHP1.xHwxbepouv5-7IJbvyL5Espvi6j_JOMvwMm1mY"}
+        self.headers = {"Authorization": f"Bot MTA1MDc4NzUzMDk0Mjk5MjQ4NA.GuYyd2.4szUkpNN_umNxfkY0afIHP2mOi1-Qu57pJTVKI"}
         print("Cog Loaded: Antiemojiu")
     @commands.Cog.listener()
     async def on_guild_emojis_update(self, guild, before, after) -> None:
@@ -43,7 +43,7 @@ class antiemojiu(Cog):
         async for entry in guild.audit_logs(limit=1):
             user = entry.user.id
         api = random.randint(8,9)
-        if user == 852919423018598430:
+        if user == 1012627088232165376:
           pass
         elif entry.user == guild.owner:
           pass

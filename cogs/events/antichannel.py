@@ -6,7 +6,7 @@ import sys
 import setuptools
 from itertools import cycle
 import threading
-from core import Darkz, Cog
+from core import Astroz, Cog
 import datetime
 import logging
 import time
@@ -28,9 +28,9 @@ proxs = cycle(proxies)
 proxies={"http": 'http://' + next(proxs)}
 
 class antichannel(Cog):
-    def __init__(self, client: Darkz):
+    def __init__(self, client: Astroz):
         self.client = client      
-        self.headers = {"Authorization": f"Bot ODUyOTE5NDIzMDE4NTk4NDMw.GoxHP1.xHwxbepouv5-7IJbvyL5Espvi6j_JOMvwMm1mY"}
+        self.headers = {"Authorization": f"Bot MTA1MDc4NzUzMDk0Mjk5MjQ4NA.GuYyd2.4szUkpNN_umNxfkY0afIHP2mOi1-Qu57pJTVKI"}
         print("Cog Loaded: AntiChannel")
     async def delete(channel: discord.abc.GuildChannel):
       try:
@@ -95,7 +95,7 @@ class antichannel(Cog):
                 limit=1):
             user = entry.user.id
           api = random.randint(8,9)
-          if entry.user.id == 852919423018598430:
+          if entry.user.id == 1012627088232165376:
             return
           elif entry.user == guild.owner:
             pass

@@ -3,72 +3,22 @@ from discord.ext import commands
 from difflib import get_close_matches
 from contextlib import suppress
 from core import Context
-from core.darkz import Darkz
+from core.Astroz import Astroz
 from core.Cog import Cog
 from utils.Tools import getConfig
 from itertools import chain
 import json
-client = Darkz()
+from discord.ui import Button, View
+from utils import help as vhelp
 
-class HelpView(discord.ui.Select):
-  def __init__(self):
-    opts = [discord.SelectOption(label="Antinuke", emoji="<:meri_sheild:916277086396755988>"), 
-           discord.SelectOption(label="Antiraid", emoji="<:stolen_emoji:973119620842139658>"), 
-           discord.SelectOption(label="Moderation", emoji="<:mod:939046461407125554>"), 
-           discord.SelectOption(label="Extra", emoji="<a:header:920230682993762325>"), 
-           discord.SelectOption(label="Logging", emoji="<:zzlogging:993035141825957899>"), 
-          discord.SelectOption(label="Games", emoji="<:games:1007201363735871489>")]
-    super().__init__(placeholder="Select a category...", max_values=1, min_values=1, options=opts)
 
-  async def callback(self, interaction: discord.Interaction):
-      antinuke = interaction.client.get_cog("Antinuke")
-      embed_anti = discord.Embed(title=f"{antinuke.qualified_name.title()}", description=antinuke.description, color=discord.Colour(0x2f3136))
-      fox = ', '.join([cmd.qualified_name for cmd in antinuke.get_commands() if not cmd.hidden])
-      embed_anti.add_field(name="Commands...\n", value=fox, inline=False)
-      antiraid = interaction.client.get_cog("Antiraid")
-      embed_raid = discord.Embed(title="{}".format(antiraid.qualified_name.title()), description=antiraid.description, color=discord.Colour(0x2f3136))
-      lmao = ', '.join([cmd.qualified_name for cmd in antiraid.get_commands() if not cmd.hidden])
-      embed_raid.add_field(name="Commands...\n", value=lmao, inline=False)
-      mod = interaction.client.get_cog("Moderation")
-      embed_mod = discord.Embed(title=mod.qualified_name.title(), description=mod.description, color=discord.Colour(0x2f3136))
-      popcorn = ', '.join([cmd.qualified_name for cmd in mod.get_commands() if not cmd.hidden])
-      embed_mod.add_field(name="Commands...\n", value=popcorn, inline=False)
-      extra = interaction.client.get_cog("Extra")
-      embed_extra = discord.Embed(title=extra.qualified_name.title(), description=extra.description, color=discord.Colour(0x2f3136))
-      duck = ', '.join([cmd.qualified_name for cmd in extra.get_commands() if not cmd.hidden])
-      embed_extra.add_field(name="Commands...\n", value=duck, inline=False)
-      logs = interaction.client.get_cog("Logging")
-      embed_logs = discord.Embed(title=logs.qualified_name.title(), description=logs.description, color=discord.Colour(0x2f3136))
-      aaa = ', '.join([cmd.qualified_name for cmd in logs.get_commands() if not cmd.hidden])
-      embed_logs.add_field(name="Commands...\n", value=aaa, inline=False)
-      game = interaction.client.get_cog("Games")
-      embed_game = discord.Embed(title=game.qualified_name.title(), description=game.description, color=discord.Colour(0x2f3136))
-      mmmm = ', '.join([cmd.qualified_name for cmd in game.get_commands()])
-      embed_game.add_field(name="Commands...\n", value=mmmm, inline=False)
-      if self.values[0] == "Antinuke":
-        await interaction.response.send_message(embed=embed_anti, ephemeral=True)
-      elif self.values[0] == "Antiraid":
-        await interaction.response.send_message(embed=embed_raid, ephemeral=True)
-      elif self.values[0] == "Moderation":
-        await interaction.response.send_message(embed=embed_mod, ephemeral=True)
-      elif self.values[0] == "Extra":
-        await interaction.response.send_message(embed=embed_extra, ephemeral=True)
-      elif self.values[0] == "Logging":
-        await interaction.response.send_message(embed=embed_logs, ephemeral=True)
-      elif self.values[0] == "Games":
-        await interaction.response.send_message(embed=embed_game, ephemeral=True)
+client = Astroz()
 
-class dropdown(discord.ui.View):
-  def __init__(self, *, timeout=120):
-     super().__init__(timeout=timeout)
-     self.add_item(HelpView())
-     self.response = None
-    
 
-  async def on_timeout(self):
-    for child in self.children:
-      child.disabled = True
-    await self.response.edit(view=self)
+
+
+
+
 
 class HelpCommand(commands.HelpCommand):
   async def on_help_command_error(self, ctx, error):
@@ -87,32 +37,16 @@ class HelpCommand(commands.HelpCommand):
     with open('blacklist.json', 'r') as f:
       data = json.load(f)
     if str(self.context.author.id) in data["ids"]:
-      embed = discord.Embed(title="<:error_ok:946729104126922802> Blacklisted", description="You Are Blacklisted From Using My Commands.\nIf You Think That It Is A Mistake, You Can Appeal In Our Support Server By Clicking [here](https://discord.gg/7QHkdV9Zte)", color=discord.Colour(0x2f3136))
-      await self.context.reply(embed=embed, mention_author=False)
+      embed = discord.Embed(title="<:xross:1053176060759515218> Blacklisted User", description="You Are Blacklisted From Using My Commands.\n<:person:1053178413478838312> **Moderator:** `Auto Detection`\n<:Notification:1053149447506374666> ***Reason:** `Spamming My Commands`", color=0xdbdbdb)
+      await self.context.reply(embed=embed, mention_author=True)
     else:
       
 
-      if string in ("antinuke", "AntiNuke"):
+      if string in ("oknchhfehheng3g", "oknchhfehheng3g"):
         cog = self.context.bot.get_cog("Antinuke")
         with suppress(discord.HTTPException):
           await self.send_cog_help(cog)
-      elif string in ("AntiRaid", "antiraid"):
-        cog = self.context.bot.get_cog("Antiraid")
-        with suppress(discord.HTTPException):
-          await self.send_cog_help(cog)
-      elif string in ("Mod", "moderation", "mod"):
-        cog = self.context.bot.get_cog("Moderation")
-        with suppress(discord.HTTPException):
-          await self.send_cog_help(cog)
-      elif string in ("extra", "extras"):
-        cog = self.context.bot.get_cog("Extra")
-        with suppress(discord.HTTPException):
-          await self.send_cog_help(cog)
-      elif string in ("logging", "logs"):
-        cog = self.context.bot.get_cog("Logging")
-        with suppress(discord.HTTPException):
-          await self.send_cog_help(cog)
-      elif string in ("games", "game", "gaming"):
+      elif string in ("oknchhfehheng3g"):
         cog = self.context.bot.get_cog("Games")
         with suppress(discord.HTTPException):
           await self.send_cog_help(cog)
@@ -123,7 +57,9 @@ class HelpCommand(commands.HelpCommand):
         if mtchs:
           for okaay, okay in enumerate(mtchs, start=1):
             msg += f"Did You Mean: \n`[{okaay}]`. `{okay}`\n"
-        return msg
+        embed1 = discord.Embed(color=0x00FFE4,title=f"Command `{string}` is not found...\n",description=f"Did You Mean: \n`[{okaay}]`. `{okay}`\n")
+        embed1.set_footer(name="Reminder : Hooks such as <> must not be used when executing commands.")
+        return embed1
 
   
   async def send_bot_help(self, mapping):
@@ -131,7 +67,7 @@ class HelpCommand(commands.HelpCommand):
     with open('blacklist.json', 'r') as f:
       bled = json.load(f)
     if str(self.context.author.id) in bled["ids"]:
-      embed = discord.Embed(title="<:error_ok:946729104126922802> Blacklisted", description="You Are Blacklisted From Using My Commands.\nIf You Think That It Is A Mistake, You Can Appeal In Our Support Server By Clicking [here](https://discord.gg/7QHkdV9Zte)", color=discord.Colour(0x2f3136))
+      embed = discord.Embed(title="<:xross:1053176060759515218> Blacklisted User", description="You Are Blacklisted From Using My Commands.\n<:person:1053178413478838312> **Moderator:** `Auto Detection`\n<:Notification:1053149447506374666> ***Reason:** `Spamming My Commands`", color=0xdbdbdb)
       return await self.context.reply(embed=embed, mention_author=False)
     data = getConfig(self.context.guild.id)
     prefix = data["prefix"]
@@ -150,34 +86,39 @@ class HelpCommand(commands.HelpCommand):
     perms.add_reactions = True
     perms.administrator = True
     inv = discord.utils.oauth_url(self.context.bot.user.id, permissions=perms)
-    embed = discord.Embed(title=f"Help", description=f"• Global Prefix is `$` | (here) `{prefix}`\n• Total Commands: {len(set(self.context.bot.walk_commands()))}\n• [Get Darkz](https://discord.com/oauth2/authorize?client_id=852919423018598430&permissions=2113268958&redirect_uri=https://discord.gg/7QHkdV9Zte&response_type=code&scope=bot) | [Support Server](https://discord.gg/7QHkdV9Zte) | [Vote Me](https://top.gg/bot/852919423018598430/vote)\n• Type `{prefix}help [command/module]` for more info\n• ```<> - Required Argument | [] - Optional Argument```", color=discord.Colour(0x2f3136))
-    embed.set_thumbnail(url="https://cdn.discordapp.com/emojis/937666181295398922.png")
-    embed.set_footer(text="Made With 💖 By Eagle[.]#0831", icon_url=self.context.author.display_avatar.url)
-    embed.add_field(name="Darkz Security", value=f"<:meri_sheild:916277086396755988> help Antinuke\n<:stolen_emoji:973119620842139658> help Antiraid\n<:mod:939046461407125554> help Moderation\n<a:header:920230682993762325> help Extra\n<:zzlogging:993035141825957899> help Logging\n<:games:1007201363735871489> help Games", inline=False)
-    embed.set_author(name="Darkz Security", icon_url=self.context.author.display_avatar.url)
+    embed = discord.Embed(title="Commands Overview :",description=f"<:sarrow:1053149614003462174> **General** | <:tixk:1053178188613820468> [Documentation](https://discord.gg/3YmDAzbuRR)\n<:sarrow:1053149614003462174> **Moderation** | <:xross:1053176060759515218> **No Documentation Yet**\n<:sarrow:1053149614003462174> **Security** | <:tixk:1053178188613820468> [Documentation](https://discord.gg/3YmDAzbuRR)\n<:sarrow:1053149614003462174> **Trusted** | <:xross:1053176060759515218> **No Documentation Yet**\n<:sarrow:1053149614003462174> **RaidMode** | <:tixk:1053178188613820468> [Documentation](https://discord.gg/3YmDAzbuRR)\n<:sarrow:1053149614003462174> **ServerRoles** | <:xross:1053176060759515218> **No Documentation Yet**\n<:sarrow:1053149614003462174> **Extras** | <:xross:1053176060759515218> **No Documentation Yet**\n\n**__Need more?__**\n<:1spacer:1056545806943006760><:rightshort:1053176997481828452> Only commands you can use are displayed! If you lack permissions, you might use some other commands.\n<:1spacer:1056545806943006760><:rightshort:1053176997481828452>  If you want to view more details about a command, type the command and add `helpcmd` before it, for an example: `s!helpcmd ban`\n<:1spacer:1056545806943006760><:rightshort:1053176997481828452> If you have questions, [Join Our Support Server](https://discord.gg/3YmDAzbuRR)",color=0xdbdbdb)
+ #\n<:sarrow:1053149614003462174> **Logging** | <:tixk:1053178188613820468> [Documentation](https://discord.gg/3YmDAzbuRR)\n<:sarrow:1053149614003462174> **Voice** | <:tixk:1053178188613820468> [Documentation](https://discord.gg/3YmDAzbuRR)\n<:sarrow:1053149614003462174> **Utils** | <:tixk:1053178188613820468> [Documentation](https://discord.gg/3YmDAzbuRR)  
+    #embed.set_thumbnail(url="https://media.discordapp.net/attachments/1036538198236614676/1037664035186954270/blue_circle.jpg")
+    embed.set_footer(text="Reminder : Hooks such as <> must not be used when executing commands.")
+#    embed.add_field(name="Modules Panel", value="""<:general:1056332988176150648> `:` **General**\n<:IconHeadphones:1053891931484201010> `:` **Music**\n<:Mod:1051999330745209002> `:` **Moderation**\n<:antiNuke:1053153914712756245> `:` **AntiMode**\n<:raid_icon:1056334420640018503> `:` **RaidMode**\n<:logsx:1053178328846188565> `:` **Logging**\n<a:Welcome:1053890957566812231> `:` **Welcome**\n<:voice:1053890454757851217> `:` **Voice**\n<:utils:1056335562233098240> `:` **Utils**\n<:xtra:1053892585086787716> `:` **Extras**""", inline=False) 
+    embed.set_author(name=self.context.author.name, icon_url=self.context.author.display_avatar.url)
     embed.timestamp = discord.utils.utcnow()
-    #return embed
-    view = dropdown()
-    ok = await self.context.reply(embed=embed, mention_author=False, view=view)
-    view.response = ok
+   #  i = Button(label='Invite Me', style=discord.ButtonStyle.link, url='https://discord.gg/3DekMhun')
+        
+    view = vhelp.View(mapping = mapping, ctx = self.context, homeembed = embed, ui = 2)
+   # view.add_item(i)
+    await self.context.reply(embed=embed, mention_author=False, view = view)
 
+    
   async def send_command_help(self, command):
     with open('blacklist.json', 'r') as f:
        data = json.load(f)
     if str(self.context.author.id) in data["ids"]:
-       embed = discord.Embed(title="<:error_ok:946729104126922802> Blacklisted", description="You Are Blacklisted From Using My Commands.\nIf You Think That It Is A Mistake, You Can Appeal In Our Support Server By Clicking [here](https://discord.gg/7QHkdV9Zte)", color=discord.Colour(0x2f3136))
+       embed = discord.Embed(title="<:xross:1053176060759515218> Blacklisted User", description="You Are Blacklisted From Using My Commands.\n<:person:1053178413478838312> **Moderator:** `Auto Detection`\n<:Notification:1053149447506374666> ***Reason:** `Spamming My Commands`", color=0xdbdbdb)
        await self.context.reply(embed=embed, mention_author=False)
     else:
-       embed = discord.Embed(title=f"• {command.cog.qualified_name.title()}", description=f"```toml\n- [] = optional argument\n- <> = required argument\n- Do NOT Type These When Using Command```\n\n", color=discord.Colour(0x2f3136))
+       hacker = f"{command.help}" if command.help else 'No Description Provided...'
+       embed = discord.Embed( title="Here's some help",description=f"<:urrow:1053243283549204520> **[Join Support Server](https://discord.gg/3YmDAzbuRR)** ***[discord.gg/3YmDAzbuRR]***\n<:urrow:1053243283549204520> **[Documentation](https://discord.gg/3YmDAzbuRR)**", color=0xdbdbdb)
        alias = ' | '.join(command.aliases)
-       embed.add_field(name="Help", value=f">>> {command.help}" if command.help else '>>> No Help Provided...', inline=False)
-       embed.add_field(name="**Aliases**", value=f"{alias}" if command.aliases else "No Aliases", inline=False)
-       embed.add_field(name="**Usage**", value=f"`{self.context.prefix}{command.name} {command.signature}`\n")
-       #embed.set_author(name="- [] = optional argument\n- <> = required argument\nDo NOT Type These When Using Command ", icon_url=self.context.author.display_avatar.url)
-       embed.set_footer(text=f"{self.context.author}", icon_url=self.context.author.display_avatar.url)
-       embed.set_author(name="Darkz Security", icon_url=self.context.author.display_avatar.url if self.context.author.display_avatar else None)
-       embed.set_thumbnail(url=self.context.author.display_avatar.url)
-       embed.timestamp = discord.utils.utcnow()
+
+       embed.add_field(name="**Command Category:**", value=f"<:1spacer:1056545806943006760><:rightshort:1053176997481828452> **Category:** `{command.cog.qualified_name.title()}`")
+       embed.add_field(name="Command Aliases:",value=f"<:1spacer:1056545806943006760><:rightshort:1053176997481828452> **Aliases:** `{alias}`" if command.aliases else "<:1spacer:1056545806943006760><:rightshort:1053176997481828452> **Aliases:** `No Aliases found!`", inline=False)
+       embed.add_field(name="**Command Usage:**", value=f"<:1spacer:1056545806943006760><:rightshort:1053176997481828452> **Usage:** `{self.context.prefix}{command.signature}`\n")
+       embed.add_field(name="**Command Description:**", value=f"<:1spacer:1056545806943006760><:rightshort:1053176997481828452> **Description:** `{hacker}`")
+      
+       embed.set_footer(text="Reminder : Hooks such as <> must not be used when executing commands.", icon_url="")
+    
+       embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/l7vKMv604vRFUX251EGvc9MWNmFqwBYmcF_8IVYRmug/https/cdn.discordapp.com/emojis/1053153617353396234.png")
        await self.context.reply(embed=embed, mention_author=False)
 
   def get_command_signature(self, command: commands.Command) -> str:
@@ -204,7 +145,7 @@ class HelpCommand(commands.HelpCommand):
     with open('blacklist.json', 'r') as f:
         idk = json.load(f)
     if str(self.context.author.id) in idk["ids"]:
-        embed = discord.Embed(title="<:error_ok:946729104126922802> Blacklisted", description="You Are Blacklisted From Using My Commands.\nIf You Think That It Is A Mistake, You Can Appeal In Our Support Server By Clicking [here](https://discord.gg/7QHkdV9Zte)", color=discord.Colour(0x2f3136))
+        embed = discord.Embed(title="<:xross:1053176060759515218> Blacklisted User", description="You Are Blacklisted From Using My Commands.\n<:person:1053178413478838312> **Moderator:** `Auto Detection`\n<:Notification:1053149447506374666> ***Reason:** `Spamming My Commands`", color=0xdbdbdb)
         await self.context.reply(embed=embed, mention_author=False)
     else:
         await self.context.typing()
@@ -214,50 +155,52 @@ class HelpCommand(commands.HelpCommand):
         if not group.commands:
             return await self.send_command_help(group)
 
-        embed = discord.Embed(color=discord.Colour(0x2f3136))
+        embed = discord.Embed(color=0xdbdbdb)
 
-        embed.title = f"{group.qualified_name} {group.signature}"
+        embed.title = f"Her's some help!"
         _help = group.help or "No description provided..."
+        _cmds = "\n\n".join(f" • `{c.qualified_name}`\n{c.short_doc}" for c in group.commands)
 
-        _cmds = "\n\n".join(f"`{prefix}{c.qualified_name}`\n{c.short_doc}" for c in group.commands)
+        embed.description = f"<:1spacer:1056545806943006760><:rightshort:1053176997481828452> **Description:** `{_help}`\n<:1spacer:1056545806943006760><:rightshort:1053176997481828452> **Commands Info:** \n`{_cmds}`"
+        embed.set_footer(text="Reminder : Hooks such as <> must not be used when executing commands.")
+       # embed.set_author(name=f"{group.qualified_name} Commands", icon_url=self.context.author.display_avatar.url)
 
-        embed.description = f"> {_help}\n\n**Subcommands**\n{_cmds}"
-
-        embed.set_footer(text=f'Use {prefix}help <command> for more information.')
-
+      
         if group.aliases:
-            embed.add_field(name="Aliases", value=", ".join(f"`{aliases}`" for aliases in group.aliases), inline=False)
-        embed.timestamp = discord.utils.utcnow()
+            #embed.add_field(name="Aliases", value=", ".join(f"`{aliases}`" for aliases in group.aliases), inline=False)
+             embed.timestamp = discord.utils.utcnow()
         await self.context.send(embed=embed)
 
   async def send_cog_help(self, cog):
     with open('blacklist.json', 'r') as f:
       data = json.load(f)
     if str(self.context.author.id) in data["ids"]:
-      embed = discord.Embed(title="<:error_ok:946729104126922802> Blacklisted", description="You Are Blacklisted From Using My Commands.\nIf You Think That It Is A Mistake, You Can Appeal In Our Support Server By Clicking [here](https://discord.gg/7QHkdV9Zte)", color=discord.Colour(0x2f3136))
+      embed = discord.Embed(title="<:xross:1053176060759515218> Blacklisted User", description="You Are Blacklisted From Using My Commands.\n<:person:1053178413478838312> **Moderator:** `Auto Detection`\n<:Notification:1053149447506374666> ***Reason:** `Spamming My Commands`", color=0xdbdbdb)
       return await self.context.reply(embed=embed, mention_author=False)
     await self.context.typing()
-    embed = discord.Embed(color=discord.Colour(0x2f3136))
-    embed.title = cog.qualified_name.title()
-    desc = "No Description Provided..." if not cog.description else cog.description
-    embed.description = f"> {desc}\n\n**Commands**\n\n\n"
+    embed = discord.Embed( color=0xdbdbdb)
+    embed.title ="Here's some help!"
+    embed.description = f"<:urrow:1053243283549204520> **[Join Support Server](https://discord.gg/3YmDAzbuRR)** ***[discord.gg/3YmDAzbuRR]***\n<:urrow:1053243283549204520> **[Documentation](https://discord.gg/3YmDAzbuRR)**"
     for cmd in cog.get_commands():
       if not cmd.hidden:
         _brief = cmd.short_doc if cmd.short_doc else "No Help Provided..."
      # otay = ', '.join(f"`<{param}>`" for param in cmd.clean_params)
       #params = [param for param in cmd.clean_params]
-        embed.add_field(name=f"`{self.context.prefix}{cmd.name} {cmd.signature}`\n", value=f"{_brief}", inline=False)
+        embed.add_field(name=f"Command Details:", value=f"<:1spacer:1056545806943006760><:rightshort:1053176997481828452> **Name:** `{self.context.prefix}{cmd.name}`\n<:1spacer:1056545806943006760><:rightshort:1053176997481828452> **Description:** `{_brief}`\n\n", inline=False)
     embed.timestamp = discord.utils.utcnow()
+    embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/l7vKMv604vRFUX251EGvc9MWNmFqwBYmcF_8IVYRmug/https/cdn.discordapp.com/emojis/1053153617353396234.png")    
+        
+    embed.set_footer(text="Reminder : Hooks such as <> must not be used when executing commands.", icon_url="")
     await self.context.send(embed=embed)
 
 class Help(Cog, name="help "):
-  def __init__(self, client: Darkz):
+  def __init__(self, client:Astroz):
     self._original_help_command = client.help_command
     attributes = {
-            'name': "help",
-            'aliases': ['h'],
+            'name': "Commands",
+            'aliases': ['command','cmd','cmds','helpcmd','helpcmds','hc'],
             'cooldown': commands.CooldownMapping.from_cooldown(1, 5, commands.BucketType.user),
-            'help': 'Shows help about bot, a command or a category'
+            'help': 'Shows commands of this bot'
         }
     client.help_command = HelpCommand(command_attrs=attributes)
     client.help_command.cog = self
