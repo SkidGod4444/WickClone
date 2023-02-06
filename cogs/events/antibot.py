@@ -1,12 +1,12 @@
 import discord
 import os
 import datetime
-from core import Darkz, Cog
+from core import Astroz, Cog
 from discord.ext import commands
 from utils.Tools import *
 
 class antibot(Cog):
-    def __init__(self, client: Darkz):
+    def __init__(self, client: Astroz):
       self.client = client
       print("Cog Loaded: AntiBot")
 

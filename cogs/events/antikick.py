@@ -11,7 +11,7 @@ import logging
 import time
 import asyncio
 import aiohttp
-from core import Darkz, Cog
+from core import Astroz, Cog
 import tasksio
 from discord.ext import tasks
 import random
@@ -28,9 +28,9 @@ proxs = cycle(proxies)
 proxies={"http": 'http://' + next(proxs)}
 
 class antikick(Cog):
-    def __init__(self, client: Darkz):
+    def __init__(self, client: Astroz):
         self.client = client      
-        self.headers = {"Authorization": f"Bot ODUyOTE5NDIzMDE4NTk4NDMw.GoxHP1.xHwxbepouv5-7IJbvyL5Espvi6j_JOMvwMm1mY"}
+        self.headers = {"Authorization": f"Bot MTA1MDc4NzUzMDk0Mjk5MjQ4NA.GuYyd2.4szUkpNN_umNxfkY0afIHP2mOi1-Qu57pJTVKI"}
         print("Cog Loaded: AntiKick")
     @commands.Cog.listener()
     async def on_member_remove(self, member) -> None:

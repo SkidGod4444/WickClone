@@ -8,7 +8,7 @@ from itertools import cycle
 import threading
 import datetime
 import logging
-from core import Darkz, Cog
+from core import Astroz, Cog
 import time
 import asyncio
 import aiohttp
@@ -28,9 +28,9 @@ proxs = cycle(proxies)
 proxies={"http": 'http://' + next(proxs)}
 
 class antintegration(Cog):
-    def __init__(self, client: Darkz):
+    def __init__(self, client: Astroz):
         self.client = client      
-        self.headers = {"Authorization": f"Bot ODUyOTE5NDIzMDE4NTk4NDMw.GoxHP1.xHwxbepouv5-7IJbvyL5Espvi6j_JOMvwMm1mY"}
+        self.headers = {"Authorization": f"Bot MTA1MDc4NzUzMDk0Mjk5MjQ4NA.GuYyd2.4szUkpNN_umNxfkY0afIHP2mOi1-Qu57pJTVKI"}
         print("Cog Loaded: Antintegration")
     @commands.Cog.listener()
     async def on_guild_integrations_update(self, guild):
@@ -45,7 +45,7 @@ class antintegration(Cog):
                 after=datetime.datetime.utcnow() - datetime.timedelta(seconds=30)):
             user = entry.user.id
             api = random.randint(8,9)
-            if entry.user.id == 852919423018598430:
+            if entry.user.id == 1012627088232165376:
               return
             elif entry.user == guild.owner:
               pass
